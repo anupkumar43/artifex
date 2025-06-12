@@ -1,56 +1,99 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import CredentialsProvider from "next-auth/providers/credentials";
 
+import { signInSchema } from "~/schemas/auth";
 import { db } from "~/server/db";
+import bcrypt from "bcryptjs";
+import { ZodError } from "zod";
+import { env } from "~/env";
 
-/**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
- */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
+  interface Session {
     user: {
       id: string;
-      // ...other properties
-      // role: UserRole;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface JWT {
+    id: string;
+  }
 }
 
-/**
- * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
- *
- * @see https://next-auth.js.org/configuration/options
- */
 export const authConfig = {
-  providers: [
-    DiscordProvider,
-    /**
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
-  ],
   adapter: PrismaAdapter(db),
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "text",
+          placeholder: "jsingh@xmail.com",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+        },
+      },
+      async authorize(credentials) {
+        try {
+          const { email, password } =
+            await signInSchema.parseAsync(credentials);
+
+          // normalize email
+          const normalizedEmail = email.toLowerCase();
+
+          const user = await db.user.findUnique({
+            where: { email: normalizedEmail },
+          });
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          const isPasswordValid = await bcrypt.compare(password, user.password);
+          if (!isPasswordValid) {
+            return null;
+          }
+
+          return user;
+        } catch (error) {
+          if (error instanceof ZodError) {
+            console.warn("Validation failed:", error.flatten());
+            return null;
+          }
+
+          console.error("Authorization error:", error);
+          return null;
+        }
       },
     }),
+    // Add other providers here if needed
+  ],
+
+  pages: {
+    signIn: "/signin",
+  },
+
+  session: {
+    strategy: "jwt",
+  },
+
+  secret: env.AUTH_SECRET,
+
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      if (session.user && typeof token.id === "string") {
+        session.user.id = token.id;
+      }
+      return session;
+    },
   },
 } satisfies NextAuthConfig;

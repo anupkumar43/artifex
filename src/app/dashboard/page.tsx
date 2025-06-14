@@ -1,15 +1,14 @@
-import Credits from "~/components/credits";
 import Signout from "~/components/signout";
+import ThumbnailCreator from "~/components/thumbnailCreater";
 
 export default function Dashboard() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          <span className="text-[hsl(280,100%,70%)]">Dash</span>board
-        </h1>
-        <Credits />
-        <Signout />
+    <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16 text-center text-white">
+      <div className="flex w-full max-w-4xl flex-col items-center gap-12">
+        {/* Main Content Section */}
+        <div className="flex w-full flex-1 flex-col items-center">
+          <ThumbnailCreator />
+        </div>
       </div>
     </main>
   );

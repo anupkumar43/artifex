@@ -41,11 +41,8 @@ export const authConfig = {
           const { email, password } =
             await signInSchema.parseAsync(credentials);
 
-          // normalize email
-          const normalizedEmail = email.toLowerCase();
-
           const user = await db.user.findUnique({
-            where: { email: normalizedEmail },
+            where: { email: email },
           });
 
           if (!user) {

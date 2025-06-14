@@ -50,7 +50,7 @@ const Signup = () => {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#1e1b4b] via-[#2e026d] to-[#0f0c29] px-4 py-12 text-white">
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#151733] to-[#ced0eb] px-4 py-12 text-white">
       <div className="w-full max-w-md space-y-6">
         <Link
           href="/"
@@ -80,7 +80,7 @@ const Signup = () => {
                   id="email"
                   type="email"
                   placeholder="you@example.com"
-                  className="border-white/20 bg-white/10 text-white placeholder-white/40 focus-visible:ring-white"
+                  className="border-white/20 bg-white/25 text-white placeholder-white/40 focus-visible:ring-white"
                   {...register("email")}
                 />
                 {errors.email && (
@@ -95,7 +95,7 @@ const Signup = () => {
                 <Input
                   id="password"
                   type="password"
-                  className="border-white/20 bg-white/10 text-white placeholder-white/40 focus-visible:ring-white"
+                  className="border-white/20 bg-white/25 text-white placeholder-white/40 focus-visible:ring-white"
                   {...register("password")}
                 />
                 {errors.password && (

@@ -114,7 +114,7 @@ const ThumbnailCreator = ({ children }: { children: React.ReactNode }) => {
   const handleDownload = async () => {
     if (canvasRef.current) {
       const link = document.createElement("a");
-      link.download = "thumbnail.png";
+      link.download = "image.png";
       link.href = canvasRef.current.toDataURL();
       link.click();
     }

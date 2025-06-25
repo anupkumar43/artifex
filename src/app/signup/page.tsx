@@ -1,14 +1,13 @@
 "use server";
 
-import getServerSession from "next-auth";
+import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";
 import Signup from "~/components/ui/signup";
-import { authConfig } from "~/server/auth/config";
 
 const Page = async () => {
-  const session = await getServerSession(authConfig);
+  const serverSession = await auth();
 
-  if (session?.user) {
+  if (serverSession?.user) {
     redirect("/dashboard");
   }
 

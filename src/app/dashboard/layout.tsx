@@ -1,7 +1,7 @@
+// layout.tsx
 "use server";
 
 import "~/styles/globals.css";
-
 import { auth } from "~/server/auth";
 import Link from "next/link";
 import Signout from "~/components/signout";
@@ -31,7 +31,7 @@ export default async function Layout({
   });
 
   return (
-    <div className="flex h-screen w-full flex-col items-center overflow-y-scroll bg-gradient-to-b from-[#8d91bc] to-[#ced0eb] px-6 py-6">
+    <div className="min-h-screen w-full bg-gradient-to-b from-[#8d91bc] to-[#ced0eb] px-6 py-6">
       <nav className="flex w-full items-center justify-end pb-6">
         <div className="flex items-center gap-4">
           <p>{user?.credits ?? 0} credits left</p>

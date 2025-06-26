@@ -235,7 +235,7 @@ const Editor = ({ children }: { children: React.ReactNode }) => {
             Want to edit your Picture?
           </h1>
           <p className="text-muted-foreground mt-2 leading-7">
-            Use one of the templates below
+            See one of the templates below
           </p>
 
           {/* Updated layout wrapper for templates and Dropzone */}

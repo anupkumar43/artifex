@@ -58,6 +58,7 @@ model User {
     sessions      Session[]
     posts         Post[]
     credits       Int   @default(1)
+    stripeCustomerId String? @unique
 }
 
 model VerificationToken {

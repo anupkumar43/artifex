@@ -8,6 +8,7 @@ import bcrypt from "bcryptjs";
 import { ZodError } from "zod";
 import { env } from "~/env";
 
+// Extend NextAuth types
 declare module "next-auth" {
   interface Session {
     user: {
@@ -38,35 +39,39 @@ export const authConfig = {
       },
       async authorize(credentials) {
         try {
-          const { email, password } =
-            await signInSchema.parseAsync(credentials);
+          if (!credentials?.email || !credentials?.password) return null;
+
+          // Safe parse
+          const parsed = signInSchema.safeParse(credentials);
+          if (!parsed.success) {
+            console.warn("Validation failed:", parsed.error.flatten());
+            return null;
+          }
+
+          const { email, password } = parsed.data;
 
           const user = await db.user.findUnique({
-            where: { email: email },
+            where: { email },
           });
 
           if (!user) {
-            throw new Error("User not found");
+            console.warn("User not found");
+            return null;
           }
 
           const isPasswordValid = await bcrypt.compare(password, user.password);
           if (!isPasswordValid) {
+            console.warn("Invalid password");
             return null;
           }
 
           return user;
-        } catch (error) {
-          if (error instanceof ZodError) {
-            console.warn("Validation failed:", error.flatten());
-            return null;
-          }
-
-          console.error("Authorization error:", error);
+        } catch (err) {
+          console.error("Authorization error:", err);
           return null;
         }
       },
     }),
-    // Add other providers here if needed
   ],
 
   pages: {
@@ -81,7 +86,7 @@ export const authConfig = {
 
   callbacks: {
     jwt({ token, user }) {
-      if (user) {
+      if (user && "id" in user && typeof user.id === "string") {
         token.id = user.id;
       }
       return token;

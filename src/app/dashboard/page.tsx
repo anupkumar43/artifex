@@ -1,4 +1,3 @@
-// page.tsx
 "use server";
 
 import Link from "next/link";
@@ -7,11 +6,14 @@ import Editor from "~/components/editor";
 import { Button } from "~/components/ui/button";
 import { auth } from "~/server/auth";
 import { db } from "~/server/db";
+import type { User } from "@prisma/client";
+import type { ReactElement } from "react";
 
-const Page = async () => {
-  const serverSession = await auth();
+const Page = async (): Promise<ReactElement> => {
+  const session = await auth();
+  const userId = session?.user?.id;
 
-  if (!serverSession?.user?.id) {
+  if (!userId) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <p>You must be signed in to view this page.</p>
@@ -19,8 +21,8 @@ const Page = async () => {
     );
   }
 
-  const user = await db.user.findUnique({
-    where: { id: serverSession.user.id },
+  const user: Pick<User, "credits"> | null = await db.user.findUnique({
+    where: { id: userId },
     select: { credits: true },
   });
 
@@ -56,4 +58,5 @@ const Page = async () => {
     </div>
   );
 };
+
 export default Page;

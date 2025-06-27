@@ -3,8 +3,10 @@ import { cache } from "react";
 
 import { authConfig } from "./config";
 
-const { auth: uncachedAuth, handlers, signIn, signOut } = NextAuth(authConfig);
+// Destructure handlers from NextAuth
+const { auth: baseAuth, handlers, signIn, signOut } = NextAuth(authConfig);
 
-const auth = cache(uncachedAuth);
+// Memoize the auth function to avoid unnecessary recomputation
+const auth = cache(baseAuth);
 
 export { auth, handlers, signIn, signOut };

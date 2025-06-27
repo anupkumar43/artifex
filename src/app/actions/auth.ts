@@ -30,14 +30,14 @@ export const signup = async (
   }
 
   // Hash password securely
-  const hashedPassword = await bcrypt.hash(parsedPassword, 10);
+  const hashedPassword: string = await bcrypt.hash(parsedPassword, 10);
 
-  // Initialize Stripe
+  // Initialize Stripe with explicit type
   const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
-  // Create Stripe customer
-  const stripeCustomer = await stripe.customers.create({
-    email: parsed.data.email.toLowerCase(),
+  // Create Stripe customer (fully typed)
+  const stripeCustomer: Stripe.Customer = await stripe.customers.create({
+    email: parsedEmail.toLowerCase(),
   });
 
   // Create user in DB

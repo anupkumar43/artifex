@@ -2,15 +2,19 @@ import { PrismaClient as BaseClient } from "~/generated/prisma-client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { env } from "~/env";
 
-// Create and extend Prisma client with Accelerate
-const createPrismaClient = () => new BaseClient().$extends(withAccelerate());
+// Create a single instance of extended Prisma client
+const createClient = () => new BaseClient().$extends(withAccelerate());
 
-// Declare global type-safe singleton to avoid multiple connections
+// Assign type after client creation to avoid circular reference
+const client = createClient();
+
+// Set up a global singleton for development (avoids hot reload issues)
 const globalForPrisma = globalThis as unknown as {
-  prisma: ReturnType<typeof createPrismaClient> | undefined;
+  prisma?: typeof client;
 };
 
-// Export the extended Prisma client
-export const db = globalForPrisma.prisma ?? createPrismaClient();
+export const db = globalForPrisma.prisma ?? client;
 
-if (env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+if (env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = db;
+}

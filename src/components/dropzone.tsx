@@ -1,5 +1,7 @@
 "use client";
 
+import { ImagePlus } from "lucide-react";
+
 const Dropzone = ({
   setSelectedImage,
 }: {
@@ -17,29 +19,18 @@ const Dropzone = ({
 
       <label
         htmlFor="file-upload"
-        className="border-muted-foreground/40 relative flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed bg-slate-50 p-10 text-center transition hover:bg-slate-100 dark:bg-slate-900/40 dark:hover:bg-slate-900/60"
+        className="group border-muted-foreground/40 relative flex w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed bg-slate-50 p-10 text-center shadow-sm transition hover:bg-slate-100 dark:bg-slate-900/40 dark:hover:bg-slate-900/60"
       >
-        <svg
-          className="text-muted-foreground mb-3 h-10 w-10"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
+        <div className="text-muted-foreground mb-4 rounded-full bg-slate-200 p-3 transition group-hover:bg-slate-300 dark:bg-slate-800 dark:group-hover:bg-slate-700">
+          <ImagePlus className="h-8 w-8" />
+        </div>
 
-        <span className="text-muted-foreground text-sm font-semibold">
-          Attach Image
-        </span>
-        <span className="text-muted-foreground mt-1 text-xs">
-          or Drag &amp; Drop
-        </span>
+        <p className="text-muted-foreground text-base font-semibold">
+          Upload an Image
+        </p>
+        <p className="text-muted-foreground mt-1 text-xs">
+          Click to browse files
+        </p>
       </label>
     </div>
   );

@@ -1,4 +1,3 @@
-// layout.tsx
 "use server";
 
 import "~/styles/globals.css";
@@ -8,9 +7,9 @@ import Signout from "~/components/signout";
 import { Button } from "~/components/ui/button";
 import { db } from "~/server/db";
 
-export default async function Layout({
+const Layout = async ({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{ children: React.ReactNode }>) => {
   const serverSession = await auth();
 
   if (!serverSession?.user?.id) {
@@ -44,4 +43,6 @@ export default async function Layout({
       {children}
     </div>
   );
-}
+};
+
+export default Layout;

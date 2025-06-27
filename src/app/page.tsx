@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { auth } from "~/server/auth";
 import Image from "next/image";
-import PricingCard from "~/components/pricingCard";
+import PricingCard from "~/components/pricing-card";
 
 export default async function HomePage() {
   const user = await auth();

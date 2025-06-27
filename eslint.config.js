@@ -8,23 +8,23 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: [".next", "node_modules"],
+    ignores: ["node_modules", ".next"],
   },
+
   ...compat.extends("next/core-web-vitals"),
 
   {
     files: ["**/*.ts", "**/*.tsx"],
+    plugins: {
+      "@typescript-eslint": tseslint.plugin,
+    },
     languageOptions: {
       parserOptions: {
         project: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
-    plugins: {
-      "@typescript-eslint": tseslint.plugin,
-    },
     rules: {
-      //  Custom Rules
       "@typescript-eslint/no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_" },
@@ -34,7 +34,7 @@ export default [
         { prefer: "type-imports", fixStyle: "inline-type-imports" },
       ],
 
-      //  Disable Unsafe Rules for Vercel
+      // Fully disable rules causing build to fail
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-call": "off",
       "@typescript-eslint/no-unsafe-member-access": "off",

@@ -3,6 +3,8 @@ import { cache } from "react";
 
 import { authConfig } from "./config";
 
+export const runtime = "nodejs";
+
 // Destructure handlers from NextAuth
 const { auth: baseAuth, handlers, signIn, signOut } = NextAuth(authConfig);
 

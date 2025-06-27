@@ -25,7 +25,6 @@
     "@hookform/resolvers": "^5.1.1",
     "@imgly/background-removal": "^1.6.0",
     "@prisma/client": "^6.5.0",
-    "@prisma/extension-accelerate": "^2.0.1",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-separator": "^1.1.7",

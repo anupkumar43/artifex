@@ -3,6 +3,8 @@ import Stripe from "stripe";
 import { env } from "~/env";
 import { db } from "~/server/db";
 
+export const runtime = "nodejs";
+
 const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
 export async function POST(req: Request) {

@@ -8,6 +8,8 @@ import bcrypt from "bcryptjs";
 import { ZodError } from "zod";
 import { env } from "~/env";
 
+export const runtime = "nodejs";
+
 // Extend NextAuth types
 declare module "next-auth" {
   interface Session {

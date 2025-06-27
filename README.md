@@ -1,29 +1,60 @@
-# Create T3 App
+# [Artifex](https://artifex-tan.vercel.app/)
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A modern **web-based image editor** with background removal, text overlay, and filter effects.
 
-## What's next? How do I make an app with this?
+# Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- **Client-Side Editing** – Built with **Next.js 15**, **React**, **Tailwind CSS**, and **HTML5 Canvas**.
+- **Smart Image Tools** – Upload, remove backgrounds, add text, and apply filters.
+- **Auth System** – Secure login/signup via **NextAuth.js** (credentials provider).
+- **Credits & Billing** – Manage user access with **Stripe**-powered credit system.
+- **Cloud Storage** – Store images on **AWS S3** for reliability and scale.
+-  **PostgreSQL Database** – User & image data handled via **Prisma ORM**.
+- **Optimized Backend** – Server actions for fast, seamless user experience.
+- **Production Ready** – Deployed on **Vercel** with CI/CD support.
+---
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## 🛠️ Get Started
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### 1. Clone the repository:
 
-## Learn More
+```bash
+git clone https://github.com/anupkumar43/artifex.git
+cd artifex
+```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### 2. Install dependencies:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+npm install
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### 3. Set up environment variables:
 
-## How do I deploy this?
+Create a `.env` file in the root of the project with the following values:
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```env
+DATABASE_URL=<your_postgresql_connection_url>
+MY_AWS_ACCESS_KEY_ID=<your_aws_access_key>
+MY_AWS_SECRET_ACCESS_KEY=<your_aws_secret_key>
+MY_AWS_REGION=<your_aws_region>
+S3_BUCKET_NAME=<your_s3_bucket>
+STRIPE_SECRET_KEY=<your_stripe_secret_key>
+NEXTAUTH_SECRET=<your_auth_secret>
+BASE_URL=http://localhost:3000
+```
+
+### 4. Generate Prisma client:
+
+```bash
+npx prisma generate
+```
+
+### 5. Run the development server:
+
+```bash
+npm run dev
+```
+
+---
+

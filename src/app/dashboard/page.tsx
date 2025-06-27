@@ -30,7 +30,7 @@ const Page = async () => {
         {user?.credits === 0 ? (
           <div className="flex flex-col px-10 md:mt-10">
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-              Hi there
+              Hi there 👋
             </h1>
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
               Want to edit a picture?
@@ -56,5 +56,4 @@ const Page = async () => {
     </div>
   );
 };
-
 export default Page;

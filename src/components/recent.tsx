@@ -25,17 +25,19 @@ const Recent = async () => {
 
   const data = await s3.listObjectsV2(params).promise();
 
-  const recentImage = data.Contents?.sort((a, b) => {
-    const dateA = new Date(a.LastModified ?? 0).getTime();
-    const dateB = new Date(b.LastModified ?? 0).getTime();
-    return dateB - dateA;
-  }).map((item) => ({
-    url: `https://${env.AWS_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${item.Key}`,
-    createdAt: item.LastModified ?? new Date(),
-  }));
+  const recentImage = (data.Contents ?? [])
+    .sort((a, b) => {
+      const dateA = new Date(a.LastModified ?? 0).getTime();
+      const dateB = new Date(b.LastModified ?? 0).getTime();
+      return dateB - dateA;
+    })
+    .map((item) => ({
+      url: `https://${env.AWS_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${item.Key}`,
+      createdAt: item.LastModified ?? new Date(),
+    }));
 
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col text-left">
       <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
         Recent Images
       </h3>
@@ -43,18 +45,22 @@ const Recent = async () => {
         Download your most recent images.
       </p>
       <Separator className="my-2" />
+
       {recentImage?.length === 0 ? (
-        <p className="text-muted-foreground text-sm">No recent Image.</p>
+        <p className="text-muted-foreground text-sm">No recent image.</p>
       ) : (
-        <div className="flex h-fit max-w-full gap-2 overflow-x-scroll">
-          {recentImage?.map((image) => (
-            <div key={image.url} className="flex min-w-fit flex-col gap-1">
+        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {recentImage.map((image) => (
+            <div
+              key={image.url}
+              className="flex flex-col items-center gap-2 rounded-lg bg-white/10 p-3 shadow-sm backdrop-blur-sm"
+            >
               <img
                 src={image.url}
-                alt="image"
-                className="h-56 w-auto rounded-lg object-contain"
+                alt="recent"
+                className="h-48 w-full rounded-md object-contain"
               />
-              <p className="text-sm">
+              <p className="text-center text-sm">
                 From{" "}
                 {new Date(image.createdAt).toLocaleDateString("en-GB", {
                   day: "2-digit",

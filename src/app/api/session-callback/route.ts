@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function GET(req: Request) {
+export async function GET() {
   revalidatePath("/dashboard");
   redirect("/dashboard");
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { IoIosCheckmarkCircleOutline, IoMdArrowBack } from "react-icons/io";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { redirectToBillingSession } from "~/app/actions/stripe";
 import { Button } from "~/components/ui/button";
 import {

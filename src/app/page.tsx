@@ -43,7 +43,7 @@ export default async function HomePage() {
           </p>
           <Button className="mt-6 w-full md:w-fit" size="lg">
             <Link href={user?.user ? "/dashboard" : "/signup"}>
-              {user?.user ? "Go to Dashboard" : "Get a Free Thumbnail"}
+              {user?.user ? "Go to Dashboard" : "Get a Free Edit"}
             </Link>
           </Button>
         </div>

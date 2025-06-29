@@ -364,8 +364,9 @@ const Editor = ({ children }: { children: React.ReactNode }) => {
             Want to edit your Picture?
           </h1>
           <p className="text-muted-foreground mt-2 leading-7">
-            See the styles below
+            Here’s what you can create with Artifex 👇
           </p>
+
           <div className="mt-10 flex flex-col items-center justify-center gap-10">
             <div className="flex flex-col items-center gap-6 md:flex-row">
               <Style
